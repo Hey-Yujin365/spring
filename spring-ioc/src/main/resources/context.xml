@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <!-- 
+    	애플리케이션 실행에 필요한 객체 생성시키기
+     -->
+     
+     <!-- 
+     	<bean />
+     		스프링 컨테이너에게 객체 생성을 위임할 클래스를 지정한다.
+     		id : 생성된 객체를 식별하는 값이다.
+     		class : 클래스의 전체 경로를 지정한다.
+     		
+     	<property />
+     		의존성 주입정보를 설정한다.
+     		name : 의존성을 주입할 멤버변수 이름을 지정한다.(생성된 객체의 참조값이 지정될 멤버변수를 지정한다. 실제는 setter메소드에 이름이다.)
+     		ref : 주입할 객체의 식별자를 지정한다.
+      -->
+     <bean id="jdbcDao" class="ioc.ProductJdbcDao"></bean>
+     <bean id="mybatisDao" class="ioc.ProductMybatisDao"></bean>
+     
+     <bean id="service" class="ioc.ProductService">
+     	<property name="dao" ref="jdbcDao"></property>
+     </bean>
+     
+</beans> 

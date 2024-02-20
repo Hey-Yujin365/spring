@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- 
+    	스프링 컨테이너가 클래스를 스캔해서 자동으로 객체 생성시키기 
+		<context:component-scan />
+    		위의 태그를 스프링 설정파일에 추가하면 스프링 컨테이너는 클래스를 자동으로 감지해서 객체를 생성한다.
+    		위의 태그를 스프링 설정파일에 추가하면 @Component, @Service, @Repository, @Controller, @RestController 등의
+    		어노테이션 부착된 클래스를 스캔해서 객체를 생성한다.
+    		
+    		base-package : 클래스를 스캔할 패키지명을 지정한다. 패키지가 여러 개일 때는 ,로 구분해서 여러개를 적을 수 있다.
+     -->
+    
+	<context:component-scan base-package="autowired" />
+    
+</beans>
