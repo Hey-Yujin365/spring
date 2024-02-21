@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 
+		<context:property-placeholder />
+			지정된 properties 파일을 읽어오는 객체를 스프링 컨테이너에 등록시키는 태그다.
+	 -->
+	<context:property-placeholder location="classpath:cloud.properties"/>
+	<!-- 
+		기본자료형값을 의존성으로 주입하기
+			setter 의존성 주입
+	 -->
+	<bean id="cloud1" class="dependency.Cloud">
+		<property name="url" value="${cloud.url}"></property>
+		<property name="port" value="${cloud.port}"></property>
+		<property name="username" value="${cloud.username}"></property>
+		<property name="password" value="${cloud.password}"></property>
+	</bean>
+	
+	<!-- 
+		기본자료형값을 의존성으로 주입하기
+			생성자 의존성 주입
+	 -->
+	<bean id="cloud2" class="dependency.Cloud">
+		<constructor-arg name="url" value="${cloud.url}"></constructor-arg>
+		<constructor-arg name="port" value="${cloud.port}"></constructor-arg>
+		<constructor-arg name="username" value="${cloud.username}"></constructor-arg>
+		<constructor-arg name="password" value="${cloud.password}"></constructor-arg>
+	</bean>
+</beans>
