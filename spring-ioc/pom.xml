@@ -12,7 +12,7 @@
 	<artifactId>spring-ioc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+	 
 	<!-- 
 		프로젝트 관련 속성값 정의
 			프로젝트의 자바 버전을 설정한다.
