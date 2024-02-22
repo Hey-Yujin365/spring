@@ -13,10 +13,14 @@ public class App {
 		UserService userService = ctx.getBean(UserService.class);
 		
 		userService.register("hong", "zxcv1234", "홍길동");
+		System.out.println();
+		
 		User user = userService.getUser("hong");
 		System.out.println(user.getId() + ", " + user.getName());
+		System.out.println();
 		
-		User other = userService.getUser("kim");
-		System.out.println(other.getId() + ", " + other.getName());
+//		User other = userService.getUser("kim");
+//		System.out.println(other.getId() + ", " + other.getName());
+//		System.out.println();
 	}
 }

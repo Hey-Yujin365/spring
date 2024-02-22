@@ -22,4 +22,26 @@
 			위의 태그를 등록하면 @AspectJ 스타일의 AOP적용이 가능해진다.
 	 -->
 	 <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	 
+	 <!-- 
+	 	<aop:config />
+	 		XML 기반 AOP 적용을 설정할 때 사용하는 태그다.
+		<aop:pointcut />
+			pointcut을 정의하는 태그다.	
+		<aop:aspect />
+			AOP 적용할 때 필요한 Advice와 Pointcut을 결합한 Aspect를 정의하는 태그다.
+			ref 속성 : 공통기능이 구현된 빈의 이름을 지정한다.
+		<aop:around />
+			around advice를 지정한다.
+			method 속성 : 대상 메소드의 실행 전/후에 실행할 공통기능이 구현된 메소드를 지정한다.
+			pointcut 혹은 pointcut-ref : 적용규칙을 지정한다.
+	  -->
+	  <bean id="runningTimeCheckAdvice" class="com.sample.aop.RunningTimeCheckAdvice"></bean>
+	  
+	  <aop:config>
+	  		<aop:pointcut expression="execution(* com.sample.service.*.*(..))" id="servicePointcut"/>
+	  		<aop:aspect ref="runningTimeCheckAdvice">
+	  			<aop:around method="checkRunningTime" pointcut-ref="servicePointcut"/>
+	  		</aop:aspect>
+	  </aop:config>
 </beans>

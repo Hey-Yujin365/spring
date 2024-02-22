@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class ExceptionAdvice {
 
-	@AfterThrowing(pointcut = "within(com.sample.service.*)", throwing = "ex")
+	@AfterThrowing(pointcut = "execution(* com.sample.service.*.*(..))", throwing = "ex")
 	public void handleException(Exception ex) {
 		System.out.println("예외가 발생했습니다. 오류 메시지: " + ex.getMessage());
 	}
