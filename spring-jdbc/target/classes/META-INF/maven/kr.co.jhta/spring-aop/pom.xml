@@ -9,11 +9,22 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<maven.compiler.source>11</maven.compiler.source>
   	</properties>
+	<!--
+		<dependencies />
+			프로젝트에서 사용되는 라이브러리 의존성을 정의하는 태그다.
+			<dependency /> 태그를 이용해서 추가할 라이브러리 의존성을 지정한다.
+				* 라이브러리 의존성 정보(groupId, artifactId, version)는 Maven Repository 사이트에서 조회할 수 있다.
+	-->
 
 	<dependencies>
   		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context</artifactId>
+		    <version>5.3.31</version>
+		</dependency>
+  		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
 		    <version>5.3.31</version>
 		</dependency>
 		
