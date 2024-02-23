@@ -3,10 +3,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop 
         http://www.springframework.org/schema/aop/spring-aop.xsd ">
     
@@ -31,4 +34,18 @@
     	스프링 컨테이너는 base-package 속성으로 지정된 패키지 및 그 하위 패키지에서 클래스를 자동으로 스캔해서 빈으로 등록시킨다.
      -->
     <context:component-scan base-package="com.sample.dao, com.sample.service"></context:component-scan>
+    
+    <!-- 
+    	선언적 트랜잭션 처리
+    		- 데이터베이스 액세스 기술에 맞는 트랜잭션매니저를 스프링 컨테이너의 빈으로 등록시킨다.
+    		- @Transactional 어노테이션을 감지해서,
+    			해당 어노테이션이 부착된 객체의 프록시를 자동으로 생성하는 작업을 수행시키는 태그를 등록한다.
+    			* 스프링은 @Transactional 어노테이션이 부착된 객체는 선언적 트랜잭션 처리가 필요한 객체로 감지한다.
+    			* 스프링은 트랜잭션 처리 기능이 구현된 객체(트랜잭션매니저)와 트랜잭션처리가 필요한 객체를 결합해서 새로운 프록시 객체를 생성한다.
+     -->
+     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+     	<property name="dataSource" ref="connectionPool"></property>
+     </bean>
+     
+     <tx:annotation-driven transaction-manager="transactionManager" />
 </beans>
