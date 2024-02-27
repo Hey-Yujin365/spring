@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -37,18 +39,29 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>운동화</td>
-						<td>65,000 원</td>
-						<td>1,000 개</td>
-						<td>판매중</td>
-						<td>
-							<a href="" class="btn btn-outline-primary btn-sm">입고</a>
-							<a href="" class="btn btn-outline-danger btn-sm">판매중지</a>
-							<a href="" class="btn btn-outline-success btn-sm">판매재개</a>
-						</td>
-					</tr>
+					<c:choose>
+						<c:when test="${empty productList }">
+							<tr>
+								<td colspan="6" class="text-center">조회결과가 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="product" items="${productList }">
+								<tr>
+									<td><input type="checkbox" /></td>
+									<td><a href="detail?no=${product.no }">${product.name }</a></td>
+									<td><fmt:formatNumber value="${product.price }" /> 원</td>
+									<td><fmt:formatNumber value="${product.stock }" /> 개</td>
+									<td>${product.statusText }</td>
+									<td>
+										<a href="" class="btn btn-outline-primary btn-sm">입고</a>
+										<a href="" class="btn btn-outline-danger btn-sm">판매중지</a>
+										<a href="" class="btn btn-outline-success btn-sm">판매재개</a>
+									</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
 		</div>
