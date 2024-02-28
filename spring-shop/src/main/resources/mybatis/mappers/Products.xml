@@ -4,6 +4,84 @@
 
 	<!-- 
 		ProductMapper 인터페이스의
+			int getTotalRows(Criteria criteria) 추상메소드와 연관된 SQL 구문이다.
+			
+			출력 : int		-		resultType		- int
+			입력 : Criteria	-		parameterType	- com.sample.web.dto.Criteria
+	 -->
+	<select id="getTotalRows" parameterType="com.sample.web.dto.Criteria" resultType="int">
+		select
+			count(*)
+		from
+			shop_products
+		<where>
+			<if test="opt != null">
+				<choose>
+					<when test="opt == 'name' ">
+						product_name like '%' || #{keyword} || '%'
+					</when>
+					<when test="opt == 'price' ">
+						product_price between 0 and to_number(#{keyword})
+					</when>
+				</choose>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 
+		ProductMapper 인터페이스의
+			List<Product> getProducts(Criteria criteria) 추상메소드와 연관된 SQL 구문이다.
+			
+			출력 : List<Product>	-		resultType		- com.sample.vo.Product
+			입력 : Criteria		-		parameterType	- com.sample.web.dto.Criteria
+	 -->
+	<select id="getProducts" parameterType="com.sample.web.dto.Criteria" resultType="com.sample.vo.Product">
+		select
+			product_no			as no,
+			product_name		as name,
+			product_price		as price,
+			product_status		as status,
+			product_stock		as stock
+		from
+			(select
+				product_no,
+				product_name,
+				product_price,
+				product_status,
+				product_stock,
+				<choose>
+					<when test="sort == 'date'">
+						row_number() over (order by product_no desc) row_num
+					</when>
+					<when test="sort == 'name'">
+						row_number() over (order by product_name asc) row_num
+					</when>
+					<when test="sort == 'lowprice'">
+						row_number() over (order by product_price asc) row_num
+					</when>
+					<when test="sort == 'highprice'">
+						row_number() over (order by product_price desc) row_num
+					</when>
+				</choose>
+			from
+				shop_products
+			<where>
+				<if test="opt != null">
+					<choose>
+						<when test="opt == 'name' ">
+							product_name like '%' || #{keyword} || '%'
+						</when>
+						<when test="opt == 'price' ">
+							product_price between 0 and to_number(#{keyword})
+						</when>
+					</choose>
+				</if>
+			</where>)
+		where
+			row_num between #{begin} and #{end}
+	</select>
+	<!-- 
+		ProductMapper 인터페이스의
 			void insertProduct(Product product) 추상메소드와 연관된 SQL 구문이다.
 			
 			출력 : void		- resultType			- 없다.

@@ -1,16 +1,18 @@
 package com.sample.web.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sample.service.ProductService;
 import com.sample.vo.Product;
+import com.sample.web.dto.Criteria;
+import com.sample.web.dto.ListDto;
 import com.sample.web.form.ProductCreateForm;
 
 /*
@@ -51,10 +53,35 @@ public class ProductController {
 		return "product/detail";		// "/WEB/INF/views/product/detail.jsp로 내부이동"
 	}
 	
+	/*
+	 * 요청URL
+	 * 		/product/list
+	 * 		/product/list?page=1&rows=10&sort=date&opt=name
+	 * 		/product/list?page=1&rows=10&sort=lowprice&opt=name&keyword=노트북
+	 */
 	@GetMapping(path = "/list")
-	public String list(Model model) {
-		List<Product> productList = productService.getProducts();
-		model.addAttribute("productList", productList);
+	public String list(@RequestParam(name = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(name = "rows", required = false, defaultValue = "10") int rows,
+			@RequestParam(name = "sort", required = false, defaultValue = "date") String sort,
+			@RequestParam(name = "opt", required = false) String opt,
+			@RequestParam(name = "keyword", required = false) String keyword,
+			Model model) {
+		
+		Criteria criteria = new Criteria();
+		criteria.setPage(page);
+		criteria.setRows(rows);
+		criteria.setSort(sort);
+		
+		// 검색옵션(opt)와 검색어(keyword) 모두 null이 아닐
+		if (StringUtils.hasText(opt) && StringUtils.hasText(keyword)) {
+			criteria.setOpt(opt);
+			criteria.setKeyword(keyword);
+		}
+		
+		ListDto<Product> dto = productService.getProducts(criteria);
+		model.addAttribute("productList", dto.getItems());
+		model.addAttribute("paging", dto.getPaging());
+		model.addAttribute("criteria", criteria);
 		return "product/list";	// "/WEB-INF/views/product/list.jsp"로 내부이동
 	}
 	
