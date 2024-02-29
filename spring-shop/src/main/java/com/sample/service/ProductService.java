@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sample.mapper.ProductMapper;
+import com.sample.vo.Company;
 import com.sample.vo.Product;
 import com.sample.web.dto.Criteria;
 import com.sample.web.dto.ListDto;
@@ -17,18 +18,29 @@ public class ProductService {
 	
 	@Autowired
 	private ProductMapper productMapper;
+	
+	@Autowired
+	private FileService fileService;
 
 	/**
 	 * ProductCreateForm 객체를 전달 받아서 신규 상품으로 등록한다.
 	 * @param form신규 상품정보가 포함되어 있는 ProductCreateForm 객체
 	 */
 	public void createProduct(ProductCreateForm form) {
+		String filename = fileService.upload(form.getPhotofile());
+		
+		Company company = Company.builder()
+				.no(form.getCompanyNo())
+				.build();
+		
 		// ProductCreateForm객체에 저장된 값으로 Product객체를 생성하고, 초기화한다.
 		Product product = Product.builder()
 				.name(form.getName())
 				.description(form.getDescription())
 				.price(form.getPrice())
+				.filename(filename)
 				.stock(form.getStock())
+				.company(company)
 				.build();
 		
 		productMapper.insertProduct(product);
@@ -61,5 +73,9 @@ public class ProductService {
 
 	public Product getProductDetail(int no) {
 		return productMapper.getProductByNo(no);
+	}
+
+	public void deleteProducts(List<Integer> noList) {
+		productMapper.deleteProducts(noList);
 	}
 }

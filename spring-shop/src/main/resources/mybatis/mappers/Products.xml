@@ -89,9 +89,9 @@
 	 -->
 	<insert id="insertProduct" parameterType="com.sample.vo.Product">
 		insert into shop_products
-		(product_no, product_name, product_description, product_stock, product_price)
+		(product_no, product_name, product_description, product_stock, product_price, product_filename, company_no)
 		values
-		(products_seq.nextval, #{name}, #{description}, #{stock}, #{price})
+		(products_seq.nextval, #{name}, #{description}, #{stock}, #{price}, #{filename}, #{company.no})
 	</insert>
 	
 	<!-- 
@@ -140,4 +140,22 @@
 		where
 			product_no = #{value}
 	</select>
+	
+		<!-- 
+		ProductMapper 인터페이스의
+			Product deleteProducts(@Param("noList") List<Integer> noList) 추상메소드와 연관된 SQL구문이다.
+			
+			출력 : void				- resultType		없다.
+			입력 : List<Integer>		- parameterType		- 추상메소드에서 @Param("noList")로 지정했기 때문에 설정할 필요없다.
+				  int[] 도 가능하다.
+	 -->
+	<delete id="deleteProducts">
+		delete from
+			shop_products
+		where
+			product_no in
+			<foreach item="no" collection="noList" open="(" separator="," close=")">
+				#{no}
+			</foreach>
+	</delete>
 </mapper>

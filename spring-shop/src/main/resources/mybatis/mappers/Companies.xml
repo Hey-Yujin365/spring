@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sample.mapper.CompanyMapper">
+
+	<!-- 
+		mybatis 쿼리 캐싱 기능
+			- mybatis는 매퍼별로 쿼리 캐싱 기능을 설정한다.
+			- <cache /> 태그를 추가하면 해당 매퍼파일에서 select 구문으로 조회한 조회결과가 캐싱된다.
+	 -->
+	<cache
+		eviction="FIFO"
+		flushInterval="10000"
+		size="512"
+		readOnly="true" />
+
+	<!-- 
+		CompanyMapper 인터페이스의
+			List<Company> getAllCompanies() 추상메소드와 연관된 SQL구문이다.
+			
+			출력 : List<Company>		- resultType		- com.sample.vo.Company
+			입력 : 없음				- parameterType		- 없음
+			
+		// useCache="false" -> 자주 바뀌고 캐싱 기능 사용하기 싫을 때
+	 -->
+	<select id="getAllCompanies" resultType="com.sample.vo.Company" >
+		select
+			company_no			as no,
+			company_name		as name,
+			company_tel			as tel,
+			company_zipcode		as zipcode,
+			company_address1	as address1,
+			company_address2	as address2
+		from
+			shop_companies
+		order by
+			company_name asc
+	</select>
+
+</mapper>

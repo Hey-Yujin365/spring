@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,6 +23,14 @@
 				action="create"
 				enctype="multipart/form-data">
 				<div class="form-group mb-3">
+					<div class="form-group mb-3">
+						<label class="form-label">제조회사</label>
+						<select class="form-select" name="companyNo">
+							<c:forEach var="company" items="${companyList }">
+								<option value="${company.no }"> ${company.name }</option>
+							</c:forEach>
+						</select>
+					</div>
 					<label class="form-label">상품명</label>
 					<input type="text" class="form-control" name="name" />
 				</div>

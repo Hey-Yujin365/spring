@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class ProductCreateForm {
 
+	private int companyNo;
 	private String name;
 	private int price;
 	private int stock;

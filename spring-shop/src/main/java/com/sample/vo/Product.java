@@ -25,10 +25,11 @@ public class Product {
 	private String filename;
 	private Date updatedDate;
 	private Date createdDate;
+	private Company company;
 	
 	@Builder
 	public Product(int no, String name, String description, int stock, String status, int price, String filename,
-			Date updatedDate, Date createdDate) {
+			Date updatedDate, Date createdDate, Company company) {
 		super();
 		this.no = no;
 		this.name = name;
@@ -39,6 +40,7 @@ public class Product {
 		this.filename = filename;
 		this.updatedDate = updatedDate;
 		this.createdDate = createdDate;
+		this.company = company;
 	}
 
 	public String getStatusText() {
