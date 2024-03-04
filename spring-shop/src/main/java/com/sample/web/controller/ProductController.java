@@ -28,7 +28,6 @@ import com.sample.web.form.ProductCreateForm;
  * @RequestMapping("/product")
  * 		URL 매핑정보를 정의한다.
  * 		클래스에 정의된 URL 매핑정보는 요청핸들러 메소드에 정의된 URL 매핑정보에 접두사처럼 추가된다.
- * 		
  */
 @Controller
 @RequestMapping("/product")
@@ -38,12 +37,13 @@ public class ProductController {
 	 * @Autowired
 	 * 		자동의존성 주입을 지원하는 어노테이션이다.
 	 * 		ProductController가 의존하는 객체를 스프링 컨테이너에서 찾아서 자동으로 조립한다.
-	 * 		만약, ProductService 타입의 객체가 스프링 컨테이너에 없으면, 애플리케이션 시자시 오류가 발생한다.
+	 * 		만약, ProductService 타입의 객체가 스프링 컨테이너에 없으면, 애플리케이션 시작시 오류가 발생한다.
 	 */
 	@Autowired
 	private ProductService productService;
 	@Autowired
 	private CompanyService companyService;
+	
 	/*
 	 * 요청 URL
 	 * 		/product/detail?no=xxx
@@ -77,7 +77,7 @@ public class ProductController {
 		criteria.setRows(rows);
 		criteria.setSort(sort);
 		
-		// 검색옵션(opt)와 검색어(keyword) 모두 null이 아닐
+		// 검색옵션(opt)와 검색어(keyword) 모두 null이 아닐 경우
 		if (StringUtils.hasText(opt) && StringUtils.hasText(keyword)) {
 			criteria.setOpt(opt);
 			criteria.setKeyword(keyword);
@@ -93,6 +93,7 @@ public class ProductController {
 	@GetMapping(path = "/create")
 	public String form(Model model) {
 		// 전체 회사정보 조회하고, Model에 저장한다.
+		// form에서 상품등록할 때 필요한 회사 목록을 같이 담아서 보내는 것이다.
 		List<Company> companyList = companyService.getAllCompanies();
 		model.addAttribute("companyList", companyList);
 		

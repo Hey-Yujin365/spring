@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sample.mapper.EmployeeMapper">
+
+	<select id="getTotalRows" parameterType="com.sample.web.dto.Criteria" >
+		select
+			count(*)
+		from
+			shop_employees
+	</select>
+
+	<select id="getAllEmps" parameterType="com.sample.web.dto.Criteria" resultType="com.sample.vo.Employee">
+		select
+			emp_no				as no,
+			emp_name			as name,
+			emp_tel				as tel,
+			emp_email			as email,
+			emp_salary			as salary,
+			emp_hire_date		as hireDate,
+			dept_no				as "dept.no",
+			dept_name			as "dept.name"
+		from
+			(select
+				e.emp_no			as no,
+				e.emp_name			as name,
+				e.emp_tel			as tel,
+				e.emp_email			as email,
+				e.emp_salary		as salary,
+				e.emp_hire_date		as hireDate,
+				e.dept_no			as "dept.no",
+				d.dept_name			as "dept.name",
+				<choose>
+					<when test="sort == 'hireDate'">
+						row_number() over (order by emp_no desc) row_num
+					</when>
+					<when test="sort == 'name'">
+						row_number() over (order by emp_name asc) row_num
+					</when>
+					<when test="sort == 'lowSalary'">
+						row_number() over (order by emp_salary asc) row_num
+					</when>
+					<when test="sort == 'highSalary'">
+						row_number() over (order by emp_salary desc) row_num
+					</when>
+				</choose>
+			from
+				shop_employees e,
+				shop_depts d
+			where
+				e.dept_no = d.dept_no)
+		where
+			row_num between #{begin} and #{end}
+	</select>
+	
+	<insert id="insertEmp" parameterType="com.sample.vo.Employee">
+		insert into shop_employees
+		(emp_no, emp_name, emp_tel, emp_email, emp_salary,
+		 emp_hire_date, dept_no, emp_created_date, emp_updated_date)
+		values
+		(emps_seq.nextval, #{name}, #{tel}, #{email}, #{salary},
+		 #{hireDate}, #{dept.no}, sysdate, sysdate)
+	</insert>
+	
+	<select id="getEmpByNo" parameterType="int" resultType="com.sample.vo.Employee">
+		select
+			e.emp_no			as no,
+			e.emp_name			as name,
+			e.emp_tel			as tel,
+			e.emp_email			as email,
+			e.emp_salary		as salary,
+			e.emp_hire_date		as hireDate,
+			e.dept_no			as "dept.no",
+			d.dept_name			as "dept.name",
+			e.emp_created_date	as createdDate,
+			e.emp_updated_date	as updatedDate
+		from
+			shop_employees e, shop_depts d
+		where
+			e.dept_no = d.dept_no
+			and e.emp_no = #{no}
+	</select>
+	
+	<update id="updateEmp" parameterType="com.sample.vo.Employee">
+		update
+			shop_employees
+		set
+			emp_name = #{name},
+			dept_no = #{dept.no},
+			emp_tel = #{tel},
+			emp_email = #{email},
+			emp_salary = #{salary},
+			emp_hire_date = #{hireDate},
+			emp_updated_date = sysdate
+		where
+			emp_no = #{no}
+	</update>
+	
+	<delete id="deleteEmpByNo" parameterType="int">
+		delete
+		from
+			shop_employees
+		where
+			emp_no = #{no}
+	</delete>
+</mapper>
