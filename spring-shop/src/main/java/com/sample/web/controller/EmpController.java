@@ -51,7 +51,7 @@ public class EmpController {
 		criteria.setPage(page);
 		criteria.setRows(rows);
 		criteria.setSort(sort);
-		System.out.println(criteria);
+		
 		ListDto<Employee> dto = hrService.getAllEmps(criteria);
 		model.addAttribute("empList", dto.getItems());
 		model.addAttribute("paging", dto.getPaging());
