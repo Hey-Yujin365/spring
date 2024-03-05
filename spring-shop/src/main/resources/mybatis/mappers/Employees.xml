@@ -21,17 +21,17 @@
 			dept_name			as "dept.name"
 		from
 			(select
-				e.emp_no			as no,
-				e.emp_name			as name,
-				e.emp_tel			as tel,
-				e.emp_email			as email,
-				e.emp_salary		as salary,
-				e.emp_hire_date		as hireDate,
-				e.dept_no			as "dept.no",
-				d.dept_name			as "dept.name",
+				e.emp_no,
+				e.emp_name,
+				e.emp_tel,
+				e.emp_email,
+				e.emp_salary,
+				e.emp_hire_date,
+				e.dept_no,
+				d.dept_name,
 				<choose>
 					<when test="sort == 'hireDate'">
-						row_number() over (order by emp_no desc) row_num
+						row_number() over (order by emp_hire_date desc) row_num
 					</when>
 					<when test="sort == 'name'">
 						row_number() over (order by emp_name asc) row_num

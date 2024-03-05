@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.sample.service.HrService;
 import com.sample.vo.Department;
 import com.sample.vo.Employee;
@@ -46,15 +45,16 @@ public class EmpController {
 	@GetMapping("/list")
 	public String list(@RequestParam(name = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(name = "rows", required = false, defaultValue = "10") int rows,
-			@RequestParam(name = "sort", required = false, defaultValue = "date") String sort,
+			@RequestParam(name = "sort", required = false, defaultValue = "hireDate") String sort,
 			Model model) {
 		Criteria criteria = new Criteria();
 		criteria.setPage(page);
 		criteria.setRows(rows);
 		criteria.setSort(sort);
-		
+		System.out.println(criteria);
 		ListDto<Employee> dto = hrService.getAllEmps(criteria);
 		model.addAttribute("empList", dto.getItems());
+		model.addAttribute("paging", dto.getPaging());
 		model.addAttribute("criteria", criteria);
 		
 		return "emp/list";

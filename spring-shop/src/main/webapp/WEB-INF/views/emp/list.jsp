@@ -28,10 +28,36 @@
 						<option value="50" ${param.rows eq 50 ? 'selected' : ''}>50개씩 보기</option>
 					</select>
 					<div class="form-check form-check-inline">
-						<label class="form-check-label">최근 입사일순</label>
 						<input class="form-check-input" type="radio"
 							name="sort"
-							value="hireDate"/>
+							value="hireDate"
+							${param.sort eq 'hireDate' ? 'checked' : '' }
+							onchange="changeSort()" />
+						<label class="form-check-label">입사일순</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio"
+							name="sort"
+							value="name"
+							${param.sort eq 'name' ? 'checked' : '' }
+							onchange="changeSort()" />
+						<label class="form-check-label">이름</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio"
+							name="sort"
+							value="lowSalary"
+							${param.sort eq 'lowSalary' ? 'checked' : '' }
+							onchange="changeSort()" />
+						<label class="form-check-label">낮은 임금순</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio"
+							name="sort"
+							value="highSalary"
+							${param.sort eq 'highSalary' ? 'checked' : '' }
+							onchange="changeSort()" />
+						<label class="form-check-label">높은 임금순</label>
 					</div>
 				</div>
 				<table class="table">
@@ -81,7 +107,21 @@
 							<nav>
 								<ul class="pagination">
 									<li class="page-item">
-										<a href="list?page=" class="page-link">이전</a>
+										<a href="list?page=${paging.currentPage - 1}" class="page-link ${paging.first ? 'disabled' : ''}"
+											onclick="changePage(${paging.currentPage - 1}, event)">이전</a>
+									</li>
+									
+									<c:forEach var="num" begin="${paging.beginPage }" end="${paging.endPage }">
+										<li class="page-item ${paging.currentPage eq num ? 'active' : '' }">
+											<a href="list?page=${num }"
+												class="page-link"
+												onclick="changePage(${num}, event)">${num }</a>
+										</li>
+									</c:forEach>
+									
+									<li class="page-item">
+										<a href="list?page=${paging.currentPage + 1}" class="page-link ${paging.last ? 'disabled' : ''}"
+											onclick="changePage(${paging.currentPage + 1}, event)">다음</a>
 									</li>
 								</ul>
 							</nav>
@@ -101,6 +141,16 @@
 </div>
 <script type="text/javascript">
 function changeRows() {
+	document.getElementById("form-employee").submit();
+}
+
+function changeSort() {
+	document.getElementById("form-employee").submit();
+}
+
+function changePage(page, event) {
+	event.preventDefault();
+	document.querySelector("input[name=page]").value = page;
 	document.getElementById("form-employee").submit();
 }
 </script>
