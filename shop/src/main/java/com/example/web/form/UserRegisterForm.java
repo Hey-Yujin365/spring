@@ -2,11 +2,13 @@ package com.example.web.form;
 
 import java.util.Date;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import com.example.vo.User;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -38,4 +40,16 @@ public class UserRegisterForm {
 	@NotNull(message = "생일은 필수입력값입니다.")
 	@Past(message = "생일은 오늘보다 이전 날짜만 가능합니다.")
 	private Date birth;
+	
+	public User toUser() {
+		User user = new User();
+		user.setId(id);
+		user.setPassword(password);
+		user.setName(name);
+		user.setEmail(email);
+		user.setTel(tel);
+		user.setBirth(birth);
+		
+		return user;
+	}
 }
