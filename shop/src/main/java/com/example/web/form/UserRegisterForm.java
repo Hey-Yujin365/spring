@@ -19,7 +19,7 @@ import lombok.ToString;
 public class UserRegisterForm {
 
 	@NotBlank(message = "아이디는 필수 입력값입니다.")
-	@Size(min = 6, max = 30, message = "아이디는 최소 6글자 이상, 최대 30글자 이하만 가능합니다.")
+	@Size(min = 3, max = 30, message = "아이디는 최소 6글자 이상, 최대 30글자 이하만 가능합니다.")
 	private String id;
 	
 	@NotBlank(message = "비밀번호는 필수 입력값입니다.")

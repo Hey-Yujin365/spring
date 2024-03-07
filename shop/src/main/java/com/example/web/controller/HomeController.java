@@ -14,7 +14,6 @@ import com.example.web.form.UserRegisterForm;
 
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Controller
 /*
@@ -48,6 +47,7 @@ public class HomeController {
 	public String register(@Valid UserRegisterForm form, BindingResult errors) {
 		
 		// 폼 입력값 유효성 체크를 통과하지 못한 경우, 회원가입화면으로 내부이동시킨다.
+		// 모델은 UserRegisterForm, 뷰페이지 이름은 form
 		if (errors.hasErrors()) {
 			return "form";
 		}
@@ -68,5 +68,20 @@ public class HomeController {
 		}
 		
 		return "redirect:/";
+	}
+	
+	/*
+	 * 요청방식
+	 * 		GET
+	 * 요청URL
+	 * 		localhost/login
+	 * 요청내용
+	 * 		로그인폼 화면을 요청한다.
+	 * 처리내용
+	 * 		뷰페이지(로그인 폼 화면, loginform.jsp) 이름을 반환한다.
+	 */
+	@GetMapping("/login")
+	public String loginform() {
+		return "loginform";
 	}
 }
