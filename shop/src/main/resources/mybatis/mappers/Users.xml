@@ -30,10 +30,17 @@
 	</resultMap>
 	
 	<insert id="insertUser" parameterType="com.example.vo.User">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select
+				users_seq.nextval
+			from
+				dual
+		</selectKey>
+		
 		insert into shop_users
 		(user_no, user_id, user_password, user_name, user_email, user_tel, user_birth)
 		values
-		(users_seq.nextval, #{id}, #{password}, #{name}, #{email}, #{tel}, #{birth})
+		(#{no}, #{id}, #{password}, #{name}, #{email}, #{tel}, #{birth})
 	</insert>
 	
 	<update id="updateUser" parameterType="com.example.vo.User">
