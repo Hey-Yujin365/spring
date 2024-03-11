@@ -18,6 +18,14 @@
 			<h1>홈</h1>
 		</div>
 	</div>
+	<div class="row mb-3">
+		<div class="col-3">
+			<%@ include file="common/category.jsp" %>
+		</div>
+		<div class="col-9">
+		
+		</div>
+	</div>
 </div>
 </body>
 </html>
