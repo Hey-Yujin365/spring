@@ -24,15 +24,17 @@
 			
 		</div>
 		<div class="col-9">
-			<form method="post" action="step2">
-				<input type="hidden" name="productNo" value="120" >
+			<form class="border bg-light p-3" method="post" action="step2">
+				<sec:csrfInput/>
+				
+				<input type="hidden" name="productNo" value="${product.no }" >
 				<div class="form-group mb-3">
 					<label class="form-label">상품이름</label>
-					<input type="text" class="form-control" name="name" value="아이폰 15" disabled="disabled"/>
+					<input type="text" class="form-control" name="name" value="${product.name }" readonly="readonly"/>
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label">상품가격</label>
-					<input type="text" class="form-control" name="price" value="150,000" disabled="disabled"/>
+					<input type="text" class="form-control" name="price" value="${product.price }" readonly="readonly"/>
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label">구매수량</label>
@@ -40,7 +42,7 @@
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label">총 구매 금액</label>
-					<input type="text" class="form-control" name="totalPrice" value="1,500,000" disabled="disabled"/>
+					<input type="text" class="form-control" name="totalPrice" value="${product.price }" readonly="readonly"/>
 				</div>
 				<div class="text-end">
 					<button type="submit" class="btn btn-primary">다음</button>

@@ -42,7 +42,8 @@
 				</thead>
 			</table>
 			
-			<form method="post" action="step3">
+			<form class="border bg-light p-3" method="post" action="step3">
+				<sec:csrfInput/>
 				<div class="form-group mb-3">
 					<label class="form-label">결제수단</label>
 					<select class="form-select" name="payType">
@@ -54,15 +55,15 @@
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label"> 카드번호</label>
-					<input type="text" name="cardno" />
+					<input type="text" class="form-control" name="cardno" />
 				</div>
 				<div class="form-group mb-3">
-					<label class="form-label"> 카드비밀번호</label>
-					<input type="text" name="cardpwd" />
+					<label class="form-label"> 할부개월수</label>
+					<input type="text" class="form-control" name="months" />
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label"> 결제금액</label>
-					<input type="text" name="payamount" value="3,000,000" />
+					<input type="text" class="form-control" name="payAmount" value="3000000" />
 				</div>
 				<div class="text-end">
 					<button type="submit" class="btn btn-primary">결제</button>
