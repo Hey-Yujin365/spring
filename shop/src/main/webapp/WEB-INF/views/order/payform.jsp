@@ -25,23 +25,26 @@
 		</div>
 		<div class="col-9">
 			<h3>주문 상품 정보</h3>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>상품이름</th>
-						<td>아이폰 15</td>
-						<th>상품가격</th>
-						<td>1,500,000 원</td>
-					</tr>
-					<tr>
-						<th>구매수량</th>
-						<td>2 개</td>
-						<th>총 구매가격</th>
-						<td>3,000,000 원</td>
-					</tr>
-				</thead>
-			</table>
+			<div class="border p-3 mb-3">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>상품이름</th>
+							<td>${orderForm.name }</td>
+							<th>상품가격</th>
+							<td><fmt:formatNumber value="${orderForm.price }" />원</td>
+						</tr>
+						<tr>
+							<th>구매수량</th>
+							<td><fmt:formatNumber value="${orderForm.amount }" /> 개</td>
+							<th>총 구매가격</th>
+							<td><fmt:formatNumber value="${orderForm.totalPrice }"/> 원</td>
+						</tr>
+					</thead>
+				</table>
+			</div>
 			
+			<h3>결제 정보</h3>
 			<form class="border bg-light p-3" method="post" action="step3">
 				<sec:csrfInput/>
 				<div class="form-group mb-3">
@@ -55,11 +58,11 @@
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label"> 카드번호</label>
-					<input type="text" class="form-control" name="cardno" />
+					<input type="text" class="form-control" name="cardno" value="1234-5678-1234-5678"/>
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label"> 할부개월수</label>
-					<input type="text" class="form-control" name="months" />
+					<input type="text" class="form-control" name="months" value="3"/>
 				</div>
 				<div class="form-group mb-3">
 					<label class="form-label"> 결제금액</label>

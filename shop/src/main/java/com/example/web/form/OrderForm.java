@@ -11,12 +11,15 @@ public class OrderForm {
 
 	// 1단계에서 입력되는 값
 	private int productNo;
+	private String name;
+	private int price;
 	private int amount;
+	private int totalPrice;
 	
 	// 2단계에서 입력되는 값
 	private String payType;
-	private String cardNo;
-	private String months;
+	private String cardno;
+	private int months;
 	private int payAmount;
 	
 }
