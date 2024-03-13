@@ -1,8 +1,8 @@
-package com.example.vo;
+package com.example.web.dto;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,17 +11,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class User {
+public class UserDto {
 
 	private int no;
 	private String id;
-	@JsonIgnore
-	private String password;
 	private String name;
-	private String email;
 	private String tel;
-	private String deleted;
+	private String email;
+	@JsonFormat(pattern = "M월 d일")
 	private Date birth;
+	@JsonFormat(pattern = "yyyy년 M월 d일")
 	private Date createdDate;
-	private Date updatedDate;
 }

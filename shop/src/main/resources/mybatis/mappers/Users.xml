@@ -89,4 +89,13 @@
 		where
 			user_no = #{value}
 	</select>
+	
+	<select id="getAllUsers" resultMap="UserResultMap">
+		select
+			*
+		from
+			shop_users
+		order by
+			user_id asc
+	</select>
 </mapper>
