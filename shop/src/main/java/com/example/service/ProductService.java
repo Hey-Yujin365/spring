@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.mapper.CompanyMapper;
 import com.example.mapper.ProductCategoryMapper;
 import com.example.mapper.ProductMapper;
+import com.example.vo.Company;
 import com.example.vo.Product;
 import com.example.vo.ProductCategory;
+import com.example.web.form.ProductForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,15 +18,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService {
 	
+	private final CompanyMapper companyMapper;
 	private final ProductMapper productMapper;
 	private final ProductCategoryMapper productCategoryMapper;
 	
 	/**
-	 * 모든 상품 카테고리 정보를 반환한다.
-	 * @return 상품 카테고리 목록
+	 * 상품 상위 카테고리 정보를 반환한다.
+	 * @return 상위 카테고리 목록
 	 */
 	public List<ProductCategory> getAllProductCategories() {
 		return productCategoryMapper.getProductCategories();
+	}
+	
+	/**
+	 * 지정된 카테고리의 하위 카테고리 정보를 반환한다.
+	 * @param categoryNo 상위 카테고리 번호
+	 * @return 하위 카테고리 목록
+	 */
+	public List<ProductCategory> getAllSubProductCategories(int categoryNo) {
+		return productCategoryMapper.getProductCategoriesByParentCategoryNo(categoryNo);
 	}
 	
 	/**
@@ -42,5 +55,18 @@ public class ProductService {
 	 */
 	public Product getProduct(int productNo) {
 		return productMapper.getProductByNo(productNo);
+	}
+
+	public List<Company> getAllCompanies() {
+		return companyMapper.getCompanies();
+	}
+
+	public void createProduct(ProductForm productForm) {
+		Product product = productForm.toProduct();
+		productMapper.insertProduct(product);
+	}
+
+	public List<Product> getAllProducts() {
+		return productMapper.getAllProducts();
 	}
 }

@@ -18,12 +18,14 @@
 		<div class="col-12">
 			<h1>관리자 홈</h1>
 		</div>
+	</div>
+	<div class="row mb-3">
 		<div class="col-3">
 			<div class="card">
 				<div class="card-header">관리자 메뉴</div>
 				<div class="list-group list-group-flush">
-					<a href="/admin/users" class="list-group-item list-group-item-acion">사용자 관리</a>
-					<a href="" class="list-group-item list-group-item-acion">상품 관리</a>
+					<a href="/admin/user/list" class="list-group-item list-group-item-acion">사용자 관리</a>
+					<a href="/admin/product/list" class="list-group-item list-group-item-acion">상품 관리</a>
 					<a href="" class="list-group-item list-group-item-acion">주문 관리</a>
 					<a href="" class="list-group-item list-group-item-acion">결제 관리</a>
 					<a href="" class="list-group-item list-group-item-acion">공지사항 관리</a>
