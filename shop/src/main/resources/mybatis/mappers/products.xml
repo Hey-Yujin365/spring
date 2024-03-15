@@ -77,4 +77,25 @@
 		values
 		(products_seq.nextval, #{name}, #{description}, #{price}, #{stock}, ${company.no}, #{category.no})
 	</insert>
+	
+	<update id="updateProduct" parameterType="com.example.vo.Product">
+		update
+			shop_products
+		set
+			product_name = #{name},
+			product_description = #{description},
+			product_price = #{price},
+			product_stock = #{stock},
+			<if test="filename != null">
+				product_filename = #{filename},
+			</if>
+			<if test="status != null">
+				product_status = #{status},
+			</if>
+			company_no = #{company.no},
+			product_category_no = #{category.no},
+			product_updated_date = sysdate
+		where
+			product_no = #{no}
+	</update>
 </mapper>
