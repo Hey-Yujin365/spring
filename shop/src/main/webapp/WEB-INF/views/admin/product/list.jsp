@@ -231,7 +231,7 @@
 			document.getElementById("pro-name-" + data.no).textContent = data.name;
 			document.getElementById("pro-price-" + data.no).textContent = parseInt(data.price).toLocaleString();
 			
-			// select박스 엘리먼트를 선태
+			// select박스 엘리먼트를 선택
 			let categorySelect = document.querySelector("select[name=categoryNo]");
 			// select.options는 셀렉터 박스의 모든 옵션을 배열로 반환한다.
 			// select.selectedIndex는 셀렉터박스의 옵션 중에서 현재 선택된 옵션의 index를 반환한다.
