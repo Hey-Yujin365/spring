@@ -40,6 +40,7 @@ public class UserSingupForm {
 		user.setName(name);
 		user.setEmail(email);
 		user.setTel(tel);
+		user.setUserRole(UserRole.ROLE_USER);	// 신규회원은 기본적으로 ROLE_USER권한으로 등록되게 한다.
 		
 		return user;
 	}

@@ -30,6 +30,37 @@
 					</tr>
 				</tbody>
 			</table>
+			
+			<div class="text-end">
+				<!-- 
+					sec:authorize="isAuthenticated()"
+						인증된 사용자인 경우 true로 판정하고, 해당 콘텐츠를 출력한다.
+						
+					${#authentication.principal.username}
+						현재 로그인된 사용자의 아이디를 조회한다.
+						
+					${post.user.username}
+						게시글의 작성자 아이디를 조회한다.
+						
+					th:if="${#authentication.principal.username == post.user.username}"
+						현재 로그인된 사용자의 아이디와 게시글 작성자 아이디가 일치하는 경우 true로 판정하고, 해당 콘텐츠를 출력한다.
+				 -->
+				<a th:href="@{|/post/vote/${post.id}|}" 
+					class="btn btn-sm btn-outline-success">
+					추천
+					<span class="badge rounded-fill bg-success" th:text="${#lists.size(post.postVoters)}">1</span>
+				</a>
+					
+				<a th:href="@{|/post/modify/${post.id}|}" 
+					sec:authorize="isAuthenticated()"
+					th:if="${#authentication.principal.username == post.user.username}"
+					class="btn btn-sm btn-warning">수정</a>
+					
+				<a th:href="@{|/post/delete/${post.id}|}" 
+					sec:authorize="isAuthenticated()"
+					th:if="${#authentication.getPrincipal().getUsername() == post.user.username}"
+					class="btn btn-sm btn-danger">삭제</a>
+			</div>
 		</div>
 	</div>
 </div>

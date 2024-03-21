@@ -45,6 +45,10 @@ import lombok.Setter;
  * 				+ default 기본키 생성 방식이다.
  * 				+ 데이터베이스에 따라 적절한 기본키를 자동으로 생성한다.
  * 				+ oracle에서 auto로 지정하면 table방식을 사용한다.
+ * 
+ * @Enumerated
+ * 		- 이 어노테이션은 상수데이터의 주요한 값(순번과 이름) 중에서 어떤 값을 엔티티에서 사용할 것인지 지정하는 어노테이션이다.
+ * 		- EnumType.STRING - 상수데이터의 이름을 사용한다., EnumType.ORDINAL - 상수데이터의 순번을 사용한다.
  */
 @Entity
 @Table(name = "board_users")
