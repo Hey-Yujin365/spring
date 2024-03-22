@@ -1,13 +1,16 @@
 package com.example.post;
 
+import java.util.List;
 import java.util.Set;
 
 import com.example.common.BaseDateTimeEntity;
+import com.example.reply.Reply;
 import com.example.user.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -62,6 +65,9 @@ public class Post extends BaseDateTimeEntity {
 	@Column(nullable = false)
 	private String content;
 	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	private List<Reply> replies;	// 댓글은 순서가 중요해서 List
+	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)	// cascade를 붙여주면 post가 삭제될 때 voter도 삭제된다.
-	private Set<PostVoter> postVoters;
+	private Set<PostVoter> postVoters;	// 추천은 중복으로 할 수 없게 Set(상황에 따라 List로 해도 되긴 하다.)
 }

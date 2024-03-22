@@ -98,4 +98,13 @@ public class PostService {
 		}
 	
 	}
+
+	/**
+	 * 삭제할 게시글 정보를 전달받아서 삭제한다.
+	 * @param post 삭제할 게시글 정보
+	 */
+	public void deletePost(Post post) {
+		postRepository.delete(post);
+		// postRepository.deleteById(post.getId()); 위의 방법과 이 방법 둘다 가능하다.
+	}
 }

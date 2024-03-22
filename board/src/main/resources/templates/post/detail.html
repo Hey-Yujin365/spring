@@ -1,9 +1,9 @@
 <html layout:decorate="~{layout/base}">
 <div layout:fragment="content" class="container my-3">
 	<div class="row mb-3">
+		<!-- top버튼 확인용 a태그 <a th:id="top"></a> -->
 		<div class="col-12">
 			<h1>게시글 상세정보</h1>
-			
 			<table class="table">
 				<colgroup>
 					<col width="15%">
@@ -31,7 +31,7 @@
 				</tbody>
 			</table>
 			
-			<div class="text-end">
+			<div>
 				<!-- 
 					sec:authorize="isAuthenticated()"
 						인증된 사용자인 경우 true로 판정하고, 해당 콘텐츠를 출력한다.
@@ -63,5 +63,47 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 댓글 목록 및 작성폼 -->
+	<div class="row mb-3">
+		<div class="col-12">
+			<!-- 댓글 목록 -->
+			<div th:each="reply : ${post.replies}" class="card my-3">
+				<div class="card-body py-1 px-2">
+					<a th:id="|reply_${reply.id}|"></a>
+					<div class="d-flex justify-content-between">
+						<div>
+							<span class="badge bg-light text-dark" th:text="${reply.user.name}">홍길동</span>
+							<span class="badge bg-light text-dark"
+								th:text="${#temporals.format(reply.createdDate, 'yyyy년 M월 d일')}">2024-03-21</span>
+						</div>
+						<div>
+							<a class="btn btn-sm btn-outline-success">추천</a>
+							<a class="btn btn-sm btn-outline-secondary">수정</a>
+							<a class="btn btn-sm btn-outline-secondary">삭제</a>
+						</div>
+					</div>
+					<p class="card-text ps-2 small" style="white-space: pre-line;"
+						th:text="${reply.content}">댓글내용입니다 내용입니다 내용입니다</p>
+				</div>
+			</div>
+			
+			<!-- 댓글 작성폼 -->
+			<form sec:authorize="isAuthenticated()" class="border p-3 mb-3"
+				method="post" th:action="@{|/reply/create/${post.id}|}">
+				<div class="row g-3">
+					<div class="col-12 position-relative">
+						<textarea class="form-control" rows="3" name="content"></textarea>
+						<button type="submit" class="btn btn-outline-dark btn-sm position-absolute"
+							style="bottom: 15px; right: 25px;">댓글등록</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- top버튼 연습용 코드
+	<div class="text-end">
+		<a href="#top" class="btn btm-sm btn-warning">TOP</a>
+	</div> -->
 </div>
 </html>
