@@ -18,6 +18,14 @@
 	</properties>
 	<dependencies>
 		<!-- 
+			마크다운 문법을 지원하는 라이브러리
+		-->
+		<dependency>
+			<groupId>org.commonmark</groupId>
+			<artifactId>commonmark</artifactId>
+			<version>0.21.0</version>
+		</dependency>
+		<!-- 
 			org.webjars 라이브러리 의존성을 사용하면 자바스크립트 라이브러리를 의존성에 포함시킬 수 있다. 
 		-->
 		<dependency>
