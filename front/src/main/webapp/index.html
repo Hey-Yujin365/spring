@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap demo</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-3">
+	<div class="row mb-3">
+		<div class="col-12">
+			<h1>사용자 관리</h1>
+			
+			<table class="table" id="table-members">
+				<colgroup>
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+					<col width="20%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>순번</th>
+						<th>번호</th>
+						<th>이메일</th>
+						<th>이름</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<div class="text-end">
+				<button class="btn btn-primary btn-sm" onclick="showFormModal()">신규 등록</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 신규 회원등록 모달창 -->
+<div class="modal" tabindex="-1" id="modal-form-member">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form class="border bg-light p-3">
+					<div class="alert alert-danger d-none" id="alert-message"></div>
+					<div class="form-group mb-3">
+						<label class="form-label">이메일</label>
+						<input type="text" class="form-control" name="email">
+					</div>
+					<div class="form-group mb-3">
+						<label class="form-label">비밀번호</label>
+						<input type="password" class="form-control" name="password">
+					</div>
+					<div class="form-group mb-3">
+						<label class="form-label">이름</label>
+						<input type="text" class="form-control" name="name">
+					</div>
+					<div class="form-group mb-3">
+						<label class="form-label">전화번호</label>
+						<input type="text" class="form-control" name="tel">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-primary" onclick="createMember()">등록</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
+<script type="text/javascript">
+
+	const url = "http://localhost/api/v1/members";
+
+	// 회원정보 목록
+	let memberList = [];
+	
+	// 회원목록이 추가될 tbody 엘리먼트를 선택해서 tbody 변수에 대입한다.
+	const tbody = document.querySelector("#table-members tbody");		// querySelector는 선택자가 필요해서 #이름으로 선택한다.
+	const formModalAlert = document.querySelector("#alert-message");
+	
+	const modalDiv = document.getElementById("modal-form-member"); 
+	const formModal = new bootstrap.Modal("#modal-form-member");	// 부트스트랩에서 형식을 이렇게 정해두었다.
+	
+	// 모달div 엘리먼트에서 "hidden.bs.modal" 이벤트 발생시 실행할 함수를 등록하기
+	// "hidden.bs.modal"이벤트는 부트스트랩의 고유 이벤트다.
+	// "hidden.bs.modal"이벤트는 화면에서 모달창이 완전히 사라졌을 때 발생하는 이벤트다.
+	// "hidden.bs.modal"이벤트는 주로 모달창을 초기화하는 용도로 사용된다.
+	modalDiv.addEventListener("hidden.bs.modal", function(event) {	// hidden.bs.modal -> 이벤트이름(정해진 이름)
+		/*
+			<div id="alert-message" class="alert alert-danger"></div>
+			class에 d-none을 추가해서 엘리먼트가 화면에 표시되지 않게 한다.
+			d-none에는 부트스트랩에서 엘리먼트가 화면에 표시되지 않게 하는 스타일이 정의된 클래스다. 
+			<div id="alert-message" class="alert alert-danger d-none"></div>
+		*/
+		formModalAlert.classList.add('d-none');
+		
+		// 폼 입력필드의 값을 전부 ""로 변경한다.
+		document.querySelector("input[name=email]").value = "";
+		document.querySelector("input[name=password]").value = "";
+		document.querySelector("input[name=name]").value = "";
+		document.querySelector("input[name=tel]").value = "";
+	});
+	
+	// 신규 회원정보를 서버로 전달해서 등록시키는 함수다.
+	async function createMember() {
+		// 입력필드 엘리먼트를 선택한다.
+		let emailInput = document.querySelector("input[name=email]");
+		let passwordInput = document.querySelector("input[name=password]");
+		let nameInput = document.querySelector("input[name=name]");
+		let telInput = document.querySelector("input[name=tel]");
+		
+		// 입력필드의 값을 읽어와서 자바스크립트 객체에 담는다.
+		// 객체에 저장할 때 객체의 프로퍼티명을 백엔드의 MemberResquest객체의 프로퍼티명과 일치시킨다.
+		let data = {
+			email: emailInput.value,
+			password: passwordInput.value,
+			name: nameInput.value,
+			tel: telInput.value
+		}
+		// 자바스크립트 객체를 json 형식의 텍스트로 변환한다.
+		let jsonText = JSON.stringify(data);
+
+		// fetch함수를 이용해서 POST 방식의 요청을 서버로 보낸다.
+		// fetch(url, options)함수를 사용한다.
+		// options 자리에는 자바스크립트 객체를 전달한다.
+		// options 자리에 전달되는 자바스크립트 객체의 프로퍼티명은 미리 정해져 있다.
+		//		method : 요청방식을 지정한다.
+		//		headers : 요청메시지의 헤더부에 포함된 요청헤더정보를 지정한다.
+		//		body : 요청메시지의 바디부에 포함되는 데이터를 지정한다. 예제에서는 json 텍스트 데이터가 지정된다.
+		let response = await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"	// 요청메세지의 바디부에 포함되는 데이터의 콘텐츠 타입을 지정한다.
+			},
+			body: jsonText
+		})
+		// 응답객체로부터 응답데이터를 획득한다.
+		// 회원가입 성공시 jsonData <--- {status:200, message:'OK', items:[{...}]}
+		// 회원가입 실패시 jsonData <--- {status:500, message:'사용할 수 없는 이메일입니다.', items:[]}
+		let jsonData = await response.json();
+		if (jsonData.status != 200) {
+			formModalAlert.classList.remove('d-none');
+			formModalAlert.textContent = jsonData.message;
+			return;
+		}
+		// 신규 가입된 사용자정보(응답데이터로 받았음)를 memberList 배열의 끝에 추가시킨다.
+		memberList.push(jsonData.items[0]);
+		refreshMemberList();
+		formModal.hide();
+	}
+	
+	// 신규 회원등록폼 모달을 화면에 표시하는 함수다.
+	function showFormModal() {
+		formModal.show();
+	}
+	
+	// 전체 회원정보를 조회하는 함수
+	async function getMembers() {
+		// 회원목록 정보를 제공하는 REST api를 요청한다.
+		let response = await fetch(url);
+		// 응답을 표현하는 객체에서 json 데이터를 조회한다. 조회된 데이터는 json 형식의 텍스트를 자바 스크립트 객체나 배열로 변환한 것이다.
+		let jsonData = await response.json();
+		// jsonData <--- {status:200, message:"OK", items:[{id:1, email:"hong@gmail.com", ...}, {}]}
+		
+		// 조회된 데이터의 status 프로퍼티 값이 200이 아니면 오류가 발생한 것이므로 경고창을 표시한다.
+		if (jsonData.status != 200) {
+			alert("회원정보 조회에 실패하였습니다.");
+			return;
+		}
+		
+		memberList = jsonData.items;
+		refreshMemberList();
+	}
+	
+	// 회원정보를 삭제하는 기능이 구현된 함수다.
+	async function removeMember(memberId) {
+		// 확인창을 표시한다. 확인을 클릭하면 answer에 true, 취소를 클릭하면 answer에 false값이 대입된다.
+		let answer = confirm("삭제하시겠습니까?");
+		
+		if (answer) {
+			let response = await fetch(url + "/" + memberId, {
+				method: "DELETE"
+			});
+			let jsonData = await response.json();
+			// jsonData <--- {status:200, message:"삭제가 완료되었습니다", items:[]}
+			if (jsonData != 200) {
+				alert("회원정보 삭제에 실패하였습니다.");
+				return;
+			}
+		}
+	}
+	
+	function refreshMemberList() {
+		if (memberList.length == 0) {
+			tbody.innerHTML = "<tr><td colspan='5' class='test-center'>회원정보가 없습니다.</td></tr>";
+			return;
+		}
+		
+		let rows = "";
+		memberList.forEach(function(member, index) {	// forEach로 실습 
+			rows += `
+				<tr>
+					<td>${index + 1}</td>
+					<td>${member.id}</td>
+					<td>${member.email}</td>
+					<td>${member.name}</td>
+					<td>
+						<button class="btn btn-outline-danger btn-sm" onclick="removeMember(${member.id})">삭제</button>
+						<button class="btn btn-outline-warning btn-sm" onclick="showFormModal(${member.id})">수정</button>
+					</td>
+				</tr>
+			`;
+		});
+		
+		/*
+		let rows = "";
+		for (let index = 0; index < memberList.length; index++) {
+			let member = memberList[index];
+			rows += `
+				<tr>
+					<td>${index + 1}</td>
+					<td>${member.id}</td>
+					<td>${member.email}</td>
+					<td>${member.name}</td>
+					<td>
+						<button class="btn btn-outline-danger btn-sm" onclick="removeMember(${member.id})">삭제</button>
+						<button class="btn btn-outline-warning btn-sm" onclick="showFormModal(${member.id})">수정</button>
+					</td>
+				</tr>
+			`;
+		} */
+		tbody.innerHTML = rows;
+	}
+	
+	getMembers();
+</script>
+</body>
+</html>
