@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +35,28 @@ import lombok.RequiredArgsConstructor;
  * 		- @ResponseBody는 요청핸들러 메소드가 반환하는 값이 View를 사용하지 않고,
  * 		  HttpMessageConvertor를 사용해서 응답 콘텐츠로 변환된다.
  * 
+ * @CrossOrigin
+ * 		- 이 어노테이션은 해당 자원에 대하여 모든 도메인, 모든 요청방식에 대해 허용하도록 설정한다.
+ * 		- 속성
+ * 			origins : 허용할 도메인을 지정한다.
+ * 					  "*" - 모든 도메인에 대해서 허용한다.
+ * 					  "http://www.example.com" - 지정된 도메인에 대해서 허용한다.
+ * CORS(Cross-Origin Resource Sharing)
+ * 	- 특정 도메인의 제한된 자원을 다른 외부 도메인에게 접근을 허용하는 정책이다.
+ * 	- 기본적으로는 Sample-Origin Policy(동일 출처 정책)이 제한된 자원을 허용하는 방식이다.
+ * 	  즉, 서버로부터 내려받는 웹 페이지에서 ajax를 이용해서 데이터를 요청할 때는
+ * 	  웹 페이지를 내려받는 서버에 대해서만 데이터를 요청할 수 있다.
+ * 	  만약, 다른 도메인으로 자원을 요청하는 HTTP 요청을 보내면 거부된다.
+ * 
  * ResponseEntity<T>
  * 		- HTTP 응답을 표현하는 객체다.
  * 		- HTTP 상태코드와 HTTP 응답데이터를 한번에 표현할 수 있는 객체다.
  * 		- T는 ResponseEntity객체에 담기는 응답데이터의 타입이다.
  * 
+ */
+
+/*
+ * 스웨거 관련 어노테이션
  * @Tag
  * 		- REST api 그룹을 설정하는 어노테이션이다.
  * 		- 해당 컨트롤러 클래스의 요청핸들러 메소드가 제공하는 REST api를 같은 그룹으로 설정한다.
@@ -73,6 +91,7 @@ import lombok.RequiredArgsConstructor;
  * 			description : 파라미터 설명을 지정한다.
  * 			required : 필수값 여부를 지정한다.
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -101,6 +120,7 @@ public class MemberController {
 	
 	@PostMapping("/members")
 	public RestResponse<Member> createMember(@RequestBody MemberRequest request) {
+		
 		Member member = memberService.createMember(request);
 		return RestResponse.getResponse(member);
 	}
