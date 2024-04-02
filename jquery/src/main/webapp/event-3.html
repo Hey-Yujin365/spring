@@ -17,6 +17,7 @@
 <script type="text/javascript">
 $(function() {
 	
+	// 폼 유효성검사 jQuery 사용
 	$("#form-login").submit(function() {
 		// 이벤트 핸들러 함수는 true/false 중 하나를 반환할 수 있다.
 		// 이벤트 핸들러 함수가 false값을 반환하면 이벤트에 대한 엘리먼트의 정해진 기본동작이 일어나지 않는다.
@@ -25,6 +26,7 @@ $(function() {
 		//		- a 엘리먼트에서 click 이벤트 발생시 지정된 링크로 페이지가 이동되는 것
 		let id = $("input[name=id]").val();
 		let pwd = $("input[name=password]").val();
+		
 		if (id == ""){
 			alert("아이디는 필수 입력값입니다.")			
 			return false;	// 기본동작 방해 - 폼 입력값이 제출되지 않게 한다.
