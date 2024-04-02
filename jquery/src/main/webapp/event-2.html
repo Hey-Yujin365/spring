@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>이벤트</h1>
+
+	<table class="border: 1px solid #ddd; width:100%">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>이름</th>
+				<th>이메일</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>홍길동</td>
+				<td>hong@gmail.com</td>
+				<td><button class="btn btn-danger" id="btn-del-user-1">삭제1</button></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>김유신</td>
+				<td>kim@gmail.com</td>
+				<td><button class="btn btn-danger" id="btn-del-user-2">삭제2</button></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>강감찬</td>
+				<td>kang@gmail.com</td>
+				<td><button class="btn btn-danger" id="btn-del-user-3">삭제3</button></td>
+			</tr>
+		</tbody>
+	</table>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	// jQuery의 묵시적 반복 특징으로 인하여 $()로 선택된 모든 엘리먼트에 한번에 이벤트 등록이 가능하다.
+	$('button[id^=btn-del-user]').click(function() {	// $('.btn-danger')도 가능
+		// this에는 이벤트가 발생한 엘리먼트 객체가 들어있다. <button class="btn btn-danger" id="btn-del-user-3">삭제3</button>
+		// $(this)를 실행하면 엘리먼트가 포함된 jQuery 집합객체가 획득된다.
+		
+		// .prop()는 엘리먼트의 프로퍼티값을 조회, 변경하는 메소드다.
+		// this.prop('disabled', true)는 사용할 수 없다. 엘리먼트 객체기 때문에 이걸 $()로 감싸주어야 집합객체 메소드를 사용할 수 있다.
+		//$(this).prop('disabled', true);는 엘리먼트의 프로퍼티 값을 조회, 변경하는 메소드다.
+		
+		// .closest()는 자신의 조상 엘리먼트 중에서 가장 가까운 엘리먼트를 찾는다.
+		// 이벤트가 발생할 엘리먼트(this, 여기서는 버튼)의 조상 중에서 tr 엘리먼트를 찾아서 삭제한다.
+		$(this).closest('tr').remove();
+	})
+})
+</script>
+</body>
+</html>

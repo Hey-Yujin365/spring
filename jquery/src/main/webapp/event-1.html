@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>이벤트</h1>
+	
+	<button onclick="handler1()" id="btn-1">버튼1</button>
+	<button id="btn-2">버튼2</button>
+	<button id="btn-3">버튼3</button>
+	<button id="btn-4">버튼4</button>
+	<button id="btn-5">버튼5</button>
+	<button id="btn-6">버튼6</button>
+	
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+	function handler1() {
+		// 인라인 이벤트 처리
+		alert("버튼1이 클릭되었음");
+	}
+	
+	// 엘리먼트객체의 onclick 프로퍼티에 이벤트핸들러 함수를 등록해서 이벤트 처리
+	document.getElementById('btn-2').onclick = function() {
+		alert("버튼2가 클릭되었음")
+	}
+	
+	// 엘리먼트객체의 addEventListener 메소드를 이용해서 이벤트와 이벤트핸들러 함수를 등록해서 이벤트 처리
+	document.getElementById('btn-3').addEventListener('click', function() {
+		alert("버튼3이 클릭되었음")
+	})
+	
+	// jQuery 집합객체의 click 메소드를 이용해서 이벤트핸들러 함수를 등록해서 이벤트 처리
+	// .click(함수)은 $()로 선택된 엘리먼트에서 click 이벤트 발생시 실행할 이벤트 핸들러 함수를 등록시킨다.
+	$('#btn-4').click(function() {
+		alert("버튼4가 클릭되었음")
+	})
+	
+	// jQuery 집합객체의 on 메소드를 이용해서 이벤트명, 이벤트핸들러 함수를 등록해서 이벤트 처리
+	$('#btn-5').on('click', function() {
+		alert("버튼5가 클릭되었음")
+	});
+	
+	// jQuery 집합객체의 one 메소드를 이용해서 딱 한번만 실행될 이벤트명, 이벤트 핸들러 함수를 등록해서 이벤트 처리
+	$('#btn-6').one('click', function() {
+		alert("버튼6이 클릭되었음")
+	});
+</script>
+</body>
+</html>

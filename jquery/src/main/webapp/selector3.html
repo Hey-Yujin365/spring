@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>선택자</h1>
+	
+	<div id="box-1">
+		<h3>박스1</h3>
+		<p>내용1</p>
+		<p>내용2</p>
+		<div id="box-4">
+			<h3>박스4</h3>
+			<p>내용3</p>
+			<p>내용4</p>
+			<p>내용5</p>
+		</div>
+	</div>
+	<div id="box-2">
+		<h3>박스2</h3>
+		<p>내용6</p>
+		<p>내용7</p>
+		<p>내용8</p>
+		<p>내용9</p>
+		<p>내용10</p>
+		<p>내용11</p>
+	</div>
+	<div id="box-3">
+		<h3>박스3</h3>
+		<p>내용12</p>
+		<p>내용13</p>
+		<p>내용14</p>
+		<p>내용15</p>
+		<p>내용16</p>
+		<p>내용17</p>
+	</div>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("div").css({'border':'1px solid black', 'padding':'5px', 'margin-bottom':'5px'});
+	
+	// #box-1의 자손 중에서 p를 선택하기
+	$('#box-1 p').css('color', 'red');
+	
+	// #box-1의 자손 중에서 마지막번째 p를 선택하기
+	$("#box-1 p:last").css('font-size', '5px');
+
+	// #box-1의 자식 중에서 p를 선택하기
+	$('#box-1 > p').css('background-color', 'lightgray');
+	
+	// #box-2의 자손 p와 #box-3의 자손 p를 선택하기
+	$('#box-2 p, #box-3 p').css('color', 'green');
+})
+</script>
+</body>
+</html>

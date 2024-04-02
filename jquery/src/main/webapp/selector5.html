@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>선택자</h1>
+	
+	<div>
+		<h3>박스1</h3>
+		<p>내용1</p>
+		<p>내용2</p>
+		<p>내용3</p>
+		<p>내용4</p>
+	</div>
+	<div>
+		<h3>박스2</h3>
+		<h4>박스2의 내용</h4>
+		<p>내용1</p>
+		<p>내용2</p>
+		<p>내용3</p>
+		<p>내용4</p>
+	</div>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	// + 인접 현재 선택자, h3과 인접해있는 p를 선택함(바로 다음인 경우에 선택 됨)
+	$('h3 + p').css('color', 'red')
+	
+	// ~ h3의 동생들 중에서 p를 선택함
+	$('h3 ~ p').css('background-color', 'yellow')
+	
+})
+	
+</script>
+</body>
+</html>

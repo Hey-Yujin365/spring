@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>선택자</h1>
+
+	<form>
+		<div>
+			<label>이메일</label><br/>
+			<input type="text" name="email" />
+		</div>
+		<div>
+			<label>비밀번호</label><br/>
+			<input type="password" name="password" />
+		</div>
+		<div>
+			<label>지역</label><br/>
+			<select name="city">
+				<option value="seoul">서울</option>
+				<option value="pusan">부산</option>
+				<option value="incheon" selected>인천</option>
+				<option value="kwangju">광주</option>
+				<option value="daegu">대구</option>
+				<option value="ulsan">울산</option>
+			</select>
+		</div>
+		<div>
+			<label>이름</label><br/>
+			<input type="text" name="name" readonly/>
+		</div>
+		<div>
+			<label>보유기술</label><br/>
+			<input type="checkbox" name="skill" value="java" checked />자바
+			<input type="checkbox" name="skill" value="python" />파이썬
+			<input type="checkbox" name="skill" value="sql" />SQL
+			<input type="checkbox" name="skill" value="network" />네트워크
+			<input type="checkbox" name="skill" value="data" />데이터분석
+		</div>
+		<div>
+			<label>이력서</label><br/>
+			<input type="file" name="resume" />
+		</div>
+		<div>
+			<label>내용</label><br/>
+			<textarea name="summary" rows="5" cols="60"></textarea>
+		</div>
+		<div>
+			<input type="checkbox" name="agree1" value="y" data-required='y' class="required" checked/>개인정보 제공 동의(필수)
+			<input type="checkbox" name="agree2" value="y" data-required='y' class="required" />위치정보 제공 동의(필수)
+			<input type="checkbox" name="agree3" value="y" data-required='y' class="required" checked/>이벤트 수신 동의(필수)
+			<input type="checkbox" name="agree4" value="y" data-required='y' class="required" />제3자 개인정보 제공 동의(필수)
+			<input type="checkbox" name="agree5" value="y" data-required='n' class="optional" />마케팅 정보 수신 동의(선택)
+			<input type="checkbox" name="agree5" value="y" data-required='n' class="optional" checked />대출정보 수신 동의(선택)
+		</div>
+	</form>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	// 필수 동의 항목의 체크박스 중에서 체크된 것 개수 조회하기
+	// :checkbox 			-> 체크박스 중에서
+	// [data-required=y] 	-> data-required 속성값이 y인 것 중에서
+	// :checked				-> 체크된 것 개수 조회하기
+	let len = $(':checkbox[data-required=y]:checked').length;
+	console.log('필수선택사항 체크 수', len);
+	
+	// :checkbox 			-> 체크박스 중에서
+	// [name^=agree]		-> name 속성값이 agree로 시작한는 것 중에서
+	// [data-required=y] 	-> data-required 속성값이 y인 것 중에서
+	// :checked				-> 체크된 것 개수 조회하기
+	let len2 = $(':checkbox[name^=agree][data-required=y]:checked').length;
+	console.log('필수선택사항 체크 수', len2);
+	
+	// 모든 폼 입력요소를 선택하기
+	$(":input");
+	
+	// 체크박스만 선택하기
+	$(':checkbox');
+	$(':checkbox[name=skill]');	// checkbox가 여러 개일 수도 있으니까 name지정해서 디테일하게 찾기
+	
+	// 체크박스 중에서 선택된 것만 찾아오기
+	$(':checkbox[name=skill]:checked');
+	
+})
+</script>
+</body>
+</html>
