@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div {
+		margin: 15px 0;
+		border: 1px solid black;
+		padding: 15px;
+	}
+	
+	span {
+		border: 1px solid black;
+		padding: 5px;
+	}
+	
+	.active {
+		background-color: lightgreen;
+	}
+</style>
+</head>
+<body>
+	<h1>실습</h1>
+	
+	<h3>직원 현황</h3>
+	<div id="box-1">
+		<span class="active" id="name-1">김유신</span>
+		<span>강감찬</span>
+		<span>이순신</span>
+		<span>류관순</span>
+		<span>홍길동</span>
+	</div>
+	
+	<div id="box-bottons">
+		<button type="button" id="btn-down">아래로</button>
+		<button type="button" id="btn-up">위로</button>
+	</div>
+	
+	<h3>참석자 현황</h3>
+	<div id="box-2">
+	
+	</div>
+
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script>
+$(function() {
+	// #box-1과 #box-2의 span을 클릭하면 active 상태가 토글된다.
+	// .toggleClass('active')
+	$("#box-1 span").click(function() {
+		$(this).toggleClass('active');
+	});
+	$("#box-2").on("click", "span", function() {
+		$(this).toggleClass('active');
+	});
+	
+	// 아래로 버튼을 클릭하면 #box-1의 span중에서 active 상태의 span 정보가 #box-2에 추가된다. 
+	$("#btn-down").click(function() {
+		//box-1 에서 active상태인 것 길이 조회
+		let len = $("#box-1 .active").length;
+		// 길이가 0이면(개수가 0개면) 알림창 띄우기
+		if (len == 0) {
+			alert("active상태가 없습니다.");		
+		}
+		
+		// 추가된 후에 active 상태를 제거한다.
+		$("#box-1 .active").each(function() {
+			// $("#box-1 .active").toggleClass('active');
+			// 위의 코드를 메소드 체이닝을 이용해서 한번에 작업한다.
+			// active를 지워주고, each를 돌면서 active상태의 this받은 것의 text값을 획득한다.
+			let name = $(this).removeClass('active').text();
+			let len2 = $("#box-2 span:contains("+name+")").length;
+			if (len2 == 0) {
+				let span = `
+					<span>${name}</span>
+				`;
+				$("#box-2").append(span);
+			}
+		});
+	})
+	
+	// 위로 버튼을 클릭하면 #box-2의 span중에서 active 상태의 span 정보가 삭제된다.
+	// 위로 버튼은 기존에 존재하던 것이라서 on()으로 하지 않아도 된다.
+	$("#btn-up").click(function() {
+		$("#box-2 .active").remove();
+	});
+})
+</script>
+</body>
+</html>

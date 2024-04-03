@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>실습</h1>
+	
+	<div>
+		<div>
+			<label>첫번째 숫자</label><br/>
+			<input type="number" name="num1" id="num1" value="0"/>
+		</div>
+		<div>
+			<label>두번째 숫자</label><br/>
+			<input type="number" name="num2" id="num2" value="0"/>
+		</div>
+		<div>
+			<button id="calcurator">계산</button>
+		</div>
+		<div>
+			<label>계산 결과</label>
+			<input type="number" name="result" id="result" value="0"/>
+		</div>
+		
+	</div>
+	
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	// 계산 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수를 등록하시오.
+	// 이벤트 핸들러 함수에는 입력필드의 값을 읽어서 합계를 구하고, 그 결과값을 아래의 입력필드에 표시하기
+	$("#calcurator").click(function() {
+		let num1 = $("#num1").val();
+		let num2 = $("#num2").val();
+		let totalNum = parseInt(num1) + parseInt(num2);
+		
+		$("#result").val(totalNum);
+	})
+	
+})
+</script>
+</body>
+</html>

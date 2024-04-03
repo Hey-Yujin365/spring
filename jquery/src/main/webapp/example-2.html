@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	span {
+		border: 1px solid #666;
+		border-radius: 4px;
+		padding: 3px;
+	}
+	span button {
+		text-align: center;
+		font-size: 10px;
+	}
+</style>
+</head>
+<body>
+	<h1>실습</h1>
+	
+	<form>
+		<div>
+			<label>상품명</label><br />
+			<input type="text" name="name" />
+		</div>
+		<div>
+			<label>가격</label><br />
+			<input type="number" name="price" />
+		</div>
+		<div>
+			<label>태그</label><br />
+			<input type="text" name="tag" /> <button type="button" id="add-tag">추가</button>
+			<div id="box-tag" style="margin-top: 10px; padding: 5px;">
+				<span>맛있는 토스트 <button type="button" class="btn btn-danger">x</button></span>
+				<span>맛있는 토스트 <button type="button" class="btn btn-danger">x</button></span>
+				<span>맛있는 토스트 <button type="button" class="btn btn-danger">x</button></span>
+				<!-- 
+					태그 입력필드에서 태그를 입력하고, 추가버튼을 클릭하면
+					<span>태그입력값 <button type="button" class="btn btn-danger btn-sm">X</button></span>
+					태그를 생성해서 #box-tag div에 추가하기
+				 -->
+			</div>
+		</div>
+	</form>
+
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	// 추가버튼을 클릭할때 실행되는 이벤트 핸들러 함수를 등록하기
+	// 이벤트 핸들러 함수에서는 태그 입력필드에 입력한 값을 읽어서 아래와 같은 태그를 생성하기 #box-tag에 추가한다.
+	// <span>태그입력값 <button type="button" class="btn btn-danger btn-sm">X</button></span>
+	// 태그 입력필드의 값을 지운다.
+	$("#add-tag").click(function() {
+		let tagText = $("input[name=tag]").val();
+		let span = `
+			<span>${tagText}<button type="button" class="btn btn-danger btn-sm">X</button></span>
+		`;
+		$("#box-tag").append(span);
+		$("input[name=tag]").val("");
+	})
+	// 태그의 x버튼을 클릭하면 실행되는 이벤트 핸들러 함수를 등록하기
+	// 이벤트 핸들러 함수에서는 해당 태그 버튼을 삭제한다.
+	$("#box-tag").on("click", ".btn-danger", function() {
+		$(this).closest("span").remove();
+	})
+	
+})
+</script>
+</body>
+</html>

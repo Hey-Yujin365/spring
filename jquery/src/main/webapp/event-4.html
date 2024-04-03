@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>이벤트</h1>
+	
+	<form id="form-register">
+		<div>
+			<label>이름</label><br>
+			<input type="text" name="name" />
+		</div>
+		<div>
+			<label>경력사항</label> <button type="button" class="btn btn-primary" id="btn-add-career">추가</button><br>
+			<input type="text" name="career" />
+		</div>
+		<div id="box-career">
+			<div>
+				<label>경력사항</label><br>
+				<input type="text" name="career" /><button type="button" class="btn btn-danger">삭제</button>
+			</div>
+			<div>
+				<label>경력사항</label><br>
+				<input type="text" name="career" /><button type="button" class="btn btn-danger">삭제</button>
+			</div>
+		</div>
+	</form>
+
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#btn-add-career').click(function(event) {
+		let div = `
+			<div>
+				<label>경력사항</label><br>
+				<input type="text" name="career" /><button type="button" class="btn btn-danger">삭제</button>
+			</div>
+		`;
+		$("#box-career").append(div);
+	});
+	
+	$("#box-career").on('click', ".btn-danger", function(event) {
+		$(this).closest('div').remove();
+	});
+})
+</script>
+</body>
+</html>
