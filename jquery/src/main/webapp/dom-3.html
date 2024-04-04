@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>HTML DOM</h1>
+
+	<form>
+		<div>
+			<label>이름</label><br/>
+			<input type="text" name="name" />
+		</div>
+		<div>
+			<label>지원분야</label><br/>
+			<input type="radio" name="job" value="car" data-city-name="seoul"/>자동차부문(서울지사)
+			<input type="radio" name="job" value="energy" data-city-name="pusan" checked/>에너지부문(부산지사)
+			<input type="radio" name="job" value="it" data-city-name="incheon" />반도체부문(인천지사)
+			<input type="radio" name="job" value="bio" data-city-name="seoul"/>바이오부문(서울지사)
+		</div>
+		<div>
+			<label>지역</label><br/>
+			<select name="city">
+				<option value="seoul">서울</option>
+				<option value="pusan" selected>부산</option>
+				<option value="incheon">인천</option>
+			</select>
+		</div>
+		<div>
+			<label>구분</label><br/>
+			<input type="radio" name="type" value="0" checked/>경력직
+			<input type="radio" name="type" value="1" />신입
+			<input type="radio" name="type" value="2" />인턴
+		</div>
+		<div id="div-career">
+			<label>경력사항</label><br />
+			<textarea name="career" rows="5" cols="60"></textarea>
+		</div>
+		<div>
+			<label>보유기술</label><br/>
+			<input type="checkbox" name="skill" value="java" />자바
+			<input type="checkbox" name="skill" value="c" checked /> C
+			<input type="checkbox" name="skill" value="python" checked/> 파이썬
+			<input type="checkbox" name="skill" value="script" checked/> 자바스크립트
+		</div>
+		<div>
+			<label>소개</label><br/>
+			<textarea name="memo" rows="5" cols="60"></textarea>
+			<p>10글자 이내로작성하시오. <span id="span-text-count">0</span>자/10자</p>
+		</div>
+		<div>
+			<label>사진</label><br/>
+			<input type="file" name="photofile" />
+		</div>
+		<div>
+			<button type="submit">등록</button>
+		</div>
+	</form>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	// textarea에 텍스트를 입력할 때마다(keyboard의 key를 입력할 때마다)실행되는 이벤트핸들러 함수를 등록한다.
+	$("textarea[name=memo]").keyup(function() {
+		let text = $(this).val();
+		let len = text.length;
+		if (len >= 10) {
+			$(this).val(text.substring(0, 10));
+		}
+		$("#span-text-count").text(len);
+	});
+	
+	// 지원분야항목 라디오버튼의 체크상태가 변경될 때마다 실행되는 이벤트핸들러 함수를 등록한다.
+	$(":radio[name=job]").change(function(){
+		let city = $(this).attr("data-city-name");
+		$('select[name=city]').val(city);
+	});
+	
+	// 구분항목의 라디오버튼 체크상태가 변경될 때마다 실행되는 이벤트핸들러 함수를 등록한다.
+	$(":radio[name=type]").change(function() {
+		let type = $(this).val();
+		if (type == "0") {
+			$("#div-career").show();
+		} else {
+			// textarea를 가린다.
+			$('#div-career').hide();
+			$('#div-career input[name=career]').prop("disabled", false);
+			// 빈공백 값이 전달될 수 있으니 disabled 하기(요구사항에 따라 달라짐)
+			$('#div-career input[name=career]').prop("disabled", true);
+		}
+	})
+})
+</script>
+</body>
+</html>

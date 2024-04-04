@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div {
+		margin: 15px 0;
+		border: 1px solid black;
+		padding: 15px;
+	}
+	
+	span {
+		border: 1px solid black;
+		padding: 5px;
+	}
+	
+	.active {
+		background-color: lightgreen;
+	}
+</style>
+</head>
+<body>
+	<h1>실습</h1>
+	
+	<h3>직원 현황</h3>
+	<div id="box-1">
+		<span>김유신</span>
+		<span>강감찬</span>
+		<span>이순신</span>
+		<span>류관순</span>
+		<span>홍길동</span>
+	</div>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#box-1 span").click(function() {
+		$(this).addClass('active')
+			.siblings()
+			.removeClass('active');
+	})
+})
+</script>
+</body>
+</html>

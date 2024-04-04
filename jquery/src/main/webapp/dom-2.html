@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>HTML DOM</h1>
+
+	<div id="box-1">
+		<p>내용1</p>
+		<p>내용2 <span>내용3</span></p>
+	</div>
+	
+	<div id="box-2">
+		<p></p>
+		<p></p>
+		<p></p>
+	</div>
+	
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	// 텍스트만 있는 엘리먼트에 대해서 .text(), .html()을 실행했을 때
+	let content1 = $('#box-1 p:eq(0)').text();
+	let content2 = $('#box-1 p:eq(0)').html();
+	console.log(content1);	// "내용1"
+	console.log(content2);	// "내용1"
+	
+	// 자식태그가 있는 엘리먼트에 대해서 .text(), .html()을 실행했을 때
+	let content3 = $('#box-1 p:eq(1)').text();
+	let content4 = $('#box-1 p:eq(1)').html();
+	console.log(content3);	// "내용2 내용2"
+	console.log(content4);	// "내용2 <span>내용3</span>"
+	
+	$('#box-2 p:eq(0)').text('내용1')
+	$('#box-2 p:eq(1)').text('내용2 <strong>내용3</strong>')	// 내용2 &lt;strong&gt;내용3&lt;/strong&gt;
+	$('#box-2 p:eq(2)').html('내용2 <strong>내용3</strong>')	// 내용2 <strong>내용3</strong>
+})
+</script>
+</body>
+</html>

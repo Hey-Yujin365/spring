@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.normal {
+		opacity: 0.3;
+	}
+	.highlight {
+		opacity: 1;
+	}
+</style>
+</head>
+<body>
+	<h1>HTML DOM</h1>
+
+	<div id="div-big-picture">
+		<img src="resources/images/1.jpg" style="width: 400px; height: 400px;" />
+	</div>
+	<div id="div-thumbnail-picture">
+		<img src="resources/images/1.jpg" class="highlight" style="width: 64px; height: 64px;" />
+		<img src="resources/images/2.jpg" class="normal" style="width: 64px; height: 64px;" />
+		<img src="resources/images/3.jpg" class="normal" style="width: 64px; height: 64px;" />
+		<img src="resources/images/4.jpg" class="normal" style="width: 64px; height: 64px;" />
+	</div>
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#div-thumbnail-picture img").click(function() {
+		let imagepath = $(this).attr('src');
+		$('#div-big-picture img').attr('src', imagepath);
+		
+		$(this).removeClass('normal').addClass('highlight')
+			.siblings()
+			.removeClass('highlight').addClass('normal');
+	});
+})
+</script>
+</body>
+</html>

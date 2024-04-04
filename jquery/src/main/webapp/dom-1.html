@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>HTML DOM</h1>
+	
+	<div id="box-1">
+		<p id="p-remove">remove</p>
+		<p id="p-detach">detach</p>
+	</div>
+	
+	<div id="box-2">
+		<button id="btn-remove-p">버튼1</button>
+		<button id="btn-detach-p">버튼2</button>
+	</div>
+	
+<script src="resources/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('p').hover(function(){
+		$(this).css('color', 'red')
+	}, function() {
+		$(this).css('color', 'black')
+	});
+	
+	$('#btn-remove-p').click(function() {
+		// .remove()를 실행한 엘리먼트를 다른 곳에 부착하면 이 엘리먼트에 등록된 이벤트핸들러가 사라져있다.
+		$('#p-remove').remove().appendTo("#box-2");
+	});
+	
+	$('#btn-detach-p').click(function() {
+		// .detach()를 실행한 엘리먼트를 다른 곳에 부착하면 이 엘리먼트에 등록된 이벤트핸들러가 유지된다.
+		$('#p-detach').detach().appendTo("#box-2");
+		
+	});
+})
+</script>
+</body>
+</html>
