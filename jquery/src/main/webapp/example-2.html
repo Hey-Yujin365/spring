@@ -29,8 +29,8 @@
 		</div>
 		<div>
 			<label>태그</label><br />
-			<input type="text" name="tag" /> <button type="button" id="add-tag">추가</button>
-			<div id="box-tag" style="margin-top: 10px; padding: 5px;">
+			<input type="text" name="tag" /> <button type="button" id="btn-add-tag">추가</button>
+			<div id="div-tags" style="margin-top: 10px; padding: 5px;">
 				<span>맛있는 토스트 <button type="button" class="btn btn-danger">x</button></span>
 				<span>맛있는 토스트 <button type="button" class="btn btn-danger">x</button></span>
 				<span>맛있는 토스트 <button type="button" class="btn btn-danger">x</button></span>
@@ -50,17 +50,27 @@ $(function() {
 	// 이벤트 핸들러 함수에서는 태그 입력필드에 입력한 값을 읽어서 아래와 같은 태그를 생성하기 #box-tag에 추가한다.
 	// <span>태그입력값 <button type="button" class="btn btn-danger btn-sm">X</button></span>
 	// 태그 입력필드의 값을 지운다.
-	$("#add-tag").click(function() {
+	
+	// 추가버튼을 클릭했을 때 실행되는 이벤트핸들러 함수를 등록하기
+	$("#btn-add-tag").click(function() {
+		// 태그 입력필드에 입력된 값을 조회한다.
 		let tagText = $("input[name=tag]").val();
+		// 화면에 추가할 html 콘텐츠를 생성한다.
 		let span = `
 			<span>${tagText}<button type="button" class="btn btn-danger btn-sm">X</button></span>
 		`;
-		$("#box-tag").append(span);
+		// div에 생성한 span 태그를 추가한다.
+		$("#div-tags").append(span);
+		// 입력필드의 값을 지운다.
 		$("input[name=tag]").val("");
 	})
+	
 	// 태그의 x버튼을 클릭하면 실행되는 이벤트 핸들러 함수를 등록하기
 	// 이벤트 핸들러 함수에서는 해당 태그 버튼을 삭제한다.
-	$("#box-tag").on("click", ".btn-danger", function() {
+	
+	// 추가된 태그의 x버튼을 클릭했을 때 실행되는 이벤트핸들러 함수를 등록하기
+	$("#div-tags").on("click", ".btn-danger", function() {
+		// 지금 클릭이벤트가 발생한 그 버튼엘리먼트(this)의 조상 엘리먼트중에서 가장 가까운 span 엘리먼트를 선택해서 삭제한다.
 		$(this).closest("span").remove();
 	})
 	

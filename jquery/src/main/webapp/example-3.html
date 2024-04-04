@@ -25,7 +25,7 @@
 	
 	<h3>직원 현황</h3>
 	<div id="box-1">
-		<span class="active" id="name-1">김유신</span>
+		<span>김유신</span>
 		<span>강감찬</span>
 		<span>이순신</span>
 		<span>류관순</span>
@@ -47,37 +47,63 @@
 $(function() {
 	// #box-1과 #box-2의 span을 클릭하면 active 상태가 토글된다.
 	// .toggleClass('active')
+	// #box-1의 span엘리먼트에서 클릭 이벤트가 발생했을 때 실행되는 이벤트핸들러 함수 등록하기
 	$("#box-1 span").click(function() {
-		$(this).toggleClass('active');
-	});
-	$("#box-2").on("click", "span", function() {
+		// 지금 클릭이벤트가 발생한 그 엘리먼트(this)의 .active를 토글시킨다.
 		$(this).toggleClass('active');
 	});
 	
-	// 아래로 버튼을 클릭하면 #box-1의 span중에서 active 상태의 span 정보가 #box-2에 추가된다. 
+	// 아래로 버튼을 클릭하면 #box-1의 span중에서 active 상태의 span 정보가 #box-2에 추가된다.
+	// 아래로 버튼에서 클릭이벤트가 발생했을 때 실행되는 이벤트 핸들러 함수 등록하기
 	$("#btn-down").click(function() {
-		//box-1 에서 active상태인 것 길이 조회
-		let len = $("#box-1 .active").length;
-		// 길이가 0이면(개수가 0개면) 알림창 띄우기
+		// $("#box-1 .active")를 사용해서 반복적으로 jQuery 집합객체를 획득해서 사용해야 한다.
+		// 그 과정이 번거로워서 $spans라는 변수에 획득된 jQuery 집합객체를 담아서 사용할 것이다.
+		// #box-1에서 .active 클래스가 있는 엘리먼트를 선택한다.
+		// $()함수로 획득한 jQuery 집합객체를 $spans 변수에 저장해둔다.(캐싱)
+		let $spans = $("#box-1 .active");
+		
+		// 위에서 선택한 엘리먼트의 개수를 조회한다.		
+		let len = $spans.length;
+		// 선택한 엘리먼트가 하나도 없으면 경고창을 표시하고 종료한다.
 		if (len == 0) {
-			alert("active상태가 없습니다.");		
+			alert("active상태가 없습니다.");
+			return;
 		}
 		
-		// 추가된 후에 active 상태를 제거한다.
-		$("#box-1 .active").each(function() {
-			// $("#box-1 .active").toggleClass('active');
-			// 위의 코드를 메소드 체이닝을 이용해서 한번에 작업한다.
-			// active를 지워주고, each를 돌면서 active상태의 this받은 것의 text값을 획득한다.
-			let name = $(this).removeClass('active').text();
-			let len2 = $("#box-2 span:contains("+name+")").length;
-			if (len2 == 0) {
-				let span = `
-					<span>${name}</span>
-				`;
-				$("#box-2").append(span);
+		// #box-2 선택자로 검색해서 획득한 jQuery집합객체를 $box2 변수에 저장해둔다.
+		let $box2 = $("#box-2");
+		// #spans 변수에 저장된 jQuery집합객체의 검색된 엘리먼트를 each 함수로 하나씩 처리한다.
+		$spans.each(function() {
+			// this에서 jQuery집합객체에 포함된 엘리먼트들(검색된 엘리먼트들)이 하나씩 전달된다.
+			// 이 예시에서는 <span>홍길동</span>엘리먼트들이다.
+			// 엘리먼트에서 이름을 조회한다.
+			let empName = $(this).text();
+			
+			// 아래 주석과 다른 방식 find 함수 사용하기
+			// $(선택자1).find(선택자2) 메소드는 $(선택자1)로 선택된 엘리먼트의 자식 엘리먼트중에서 find(선택자2)로 엘리먼트를 검색한다.
+			// :contains(텍스트)는 지정한 텍스트를 포함하고 있는 엘리먼트를 검색한다.
+			// 'span:contains(${empName})'는 span엘리먼트 중에서 지정한 직원이름이 포함된 것을 검색한다.
+			if ($box2.find(`span:contains(${empName})`).length == 0) {
+				// span 엘리먼트를 작성하고, #box-2 엘리먼트에 추가한다.
+				let span = `<span>${empName}</span>`;
+				$box2.append(span);
 			}
-		});
-	})
+			
+/* 			let len2 = $("#box-2 span:contains("+empName+")").length;
+			
+			if (len2 == 0) {
+				let span = `<span>${empName}</span>`;
+				$("#box-2").append(span);
+			} */
+		// 메소드 체이닝을 통해 each로 획득된 것마다 'active' 클래스 속성 지우기
+		}).removeClass('active');
+	});
+	
+	// #box-2의 span 엘리먼트에서 클릭이벤트 발생시 실행되는 이벤트핸들러 함수를 등록하기
+	$("#box-2").on("click", "span", function() {
+		// 지금 클릭한 그 span 엘리먼트(this)의 active 클래스를 토글시킨다.
+		$(this).toggleClass('active');
+	});
 	
 	// 위로 버튼을 클릭하면 #box-2의 span중에서 active 상태의 span 정보가 삭제된다.
 	// 위로 버튼은 기존에 존재하던 것이라서 on()으로 하지 않아도 된다.
