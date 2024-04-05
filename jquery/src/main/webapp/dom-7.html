@@ -34,6 +34,19 @@
 <script src="resources/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	/*
+		.end()는 맨 마지막 필터메소드 실행전 상태로 jQuery 집합객체의 상태를 되돌리는 메소드다.
+		아래 예시에서 $('table').필터메소드1().조작메소드1()
+							 .end()
+							 .필터메소드2().조작메소드2
+		$('table') 선택자함수로 선택된 엘리먼트를 기준으로 필터메소드1()을 실행해서 엘리먼트를 선택하고, 조작메소드1()실행한 다음
+		end() 메소드를 호출해서 필터메소드1() 실행전 상태로 되돌린 다음
+		다시 $('table') 선택자 함수로 선택된 엘리먼트를 기준으로 필터메소드2()를 실행해서 엘리먼트를 선택하고, 조작메소드2()를 실행했다.
+	*/
+	$('table').find('thead').css('background-color', 'lightgreen')
+			  .end()
+			  .find('tbody').css('background-color', '#eee');
+	
 	$("tbody tr").each(function() {
 		let kor = parseInt($(this).find("td.score:eq(0)").text());
 		let eng = parseInt($(this).find("td.score:eq(1)").text());
